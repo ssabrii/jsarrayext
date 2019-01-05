@@ -4,11 +4,11 @@ import "reflect"
 
 func every(
 	slice interface{},
-	fn func(element interface{}, index int, slice interface{}) bool,
+	fn func(element interface{}, index int) bool,
 ) bool {
 	for index := 0; index < reflect.ValueOf(slice).Len(); index++ {
 		element := reflect.ValueOf(slice).Index(index).Interface()
-		if fn(element, index, slice) == false {
+		if fn(element, index) == false {
 			return false
 		}
 	}
@@ -18,12 +18,12 @@ func every(
 
 func filter(
 	slice interface{},
-	fn func(element interface{}, index int, slice interface{}) bool,
+	fn func(element interface{}, index int) bool,
 ) interface{} {
 	filtered := reflect.MakeSlice(reflect.TypeOf(slice), 0, reflect.ValueOf(slice).Len())
 
-	forEach(slice, func(element interface{}, index int, slice interface{}) {
-		if fn(element, index, slice) == true {
+	forEach(slice, func(element interface{}, index int) {
+		if fn(element, index) == true {
 			filtered = reflect.AppendSlice(filtered, reflect.ValueOf(element))
 		}
 	})
@@ -33,7 +33,7 @@ func filter(
 
 func find(
 	slice interface{},
-	fn func(element interface{}, index int, slice interface{}) bool,
+	fn func(element interface{}, index int) bool,
 ) interface{} {
 	if index := findIndex(slice, fn); index != -1 {
 		element := reflect.ValueOf(slice).Index(index).Interface()
@@ -45,11 +45,11 @@ func find(
 
 func findIndex(
 	slice interface{},
-	fn func(element interface{}, index int, slice interface{}) bool,
+	fn func(element interface{}, index int) bool,
 ) int {
 	for index := 0; index < reflect.ValueOf(slice).Len(); index++ {
 		element := reflect.ValueOf(slice).Index(index).Interface()
-		if fn(element, index, slice) == true {
+		if fn(element, index) == true {
 			return index
 		}
 	}
@@ -59,23 +59,23 @@ func findIndex(
 
 func forEach(
 	slice interface{},
-	fn func(element interface{}, index int, slice interface{}),
+	fn func(element interface{}, index int),
 ) {
 	for index := 0; index < reflect.ValueOf(slice).Len(); index++ {
 		element := reflect.ValueOf(slice).Index(index).Interface()
-		fn(element, index, slice)
+		fn(element, index)
 	}
 }
 
 func mapToInterfaceSlice(
 	slice interface{},
-	fn func(element interface{}, index int, slice interface{}) interface{},
+	fn func(element interface{}, index int) interface{},
 ) []interface{} {
 	mapped := make([]interface{}, reflect.ValueOf(slice).Len())
 
 	for index := 0; index < reflect.ValueOf(slice).Len(); index++ {
 		element := reflect.ValueOf(slice).Index(index).Interface()
-		mapped[index] = fn(element, index, slice)
+		mapped[index] = fn(element, index)
 	}
 
 	return mapped
@@ -83,11 +83,11 @@ func mapToInterfaceSlice(
 
 func some(
 	slice interface{},
-	fn func(element interface{}, index int, slice interface{}) bool,
+	fn func(element interface{}, index int) bool,
 ) bool {
 	for index := 0; index < reflect.ValueOf(slice).Len(); index++ {
 		element := reflect.ValueOf(slice).Index(index).Interface()
-		if fn(element, index, slice) == true {
+		if fn(element, index) == true {
 			return true
 		}
 	}
