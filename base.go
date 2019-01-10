@@ -24,7 +24,13 @@ func filter(
 
 	forEach(slice, func(element interface{}, index int) {
 		if fn(element, index) == true {
-			filtered = reflect.AppendSlice(filtered, reflect.ValueOf(element))
+			if element == nil {
+				// reflect.Append(filtered, nil) won't work.
+				nilSlice := reflect.MakeSlice(reflect.TypeOf(slice), 1, 1)
+				filtered = reflect.AppendSlice(filtered, nilSlice)
+			} else {
+				filtered = reflect.Append(filtered, reflect.ValueOf(element))
+			}
 		}
 	})
 
