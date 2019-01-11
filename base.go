@@ -26,8 +26,9 @@ func filter(
 		if fn(element, index) == true {
 			if element == nil {
 				// reflect.Append(filtered, nil) won't work.
-				nilSlice := reflect.MakeSlice(reflect.TypeOf(slice), 1, 1)
-				filtered = reflect.AppendSlice(filtered, nilSlice)
+				// Instead create a zero value of the type and append it.
+				// See also https://groups.google.com/forum/#!topic/golang-nuts/Txje1_UfaMQ
+				filtered = reflect.Append(filtered, reflect.Zero(reflect.TypeOf(slice).Elem()))
 			} else {
 				filtered = reflect.Append(filtered, reflect.ValueOf(element))
 			}
