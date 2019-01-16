@@ -19,9 +19,14 @@ func (s IntSlice) Filter(fn func(element int, index int) bool) IntSlice {
 
 // Find ...
 func (s IntSlice) Find(fn func(element int, index int) bool) int {
-	return find(s, func(element interface{}, index int) bool {
+	r := find(s, func(element interface{}, index int) bool {
 		return fn(element.(int), index)
-	}).(int)
+	})
+
+	if r == nil {
+		return 0
+	}
+	return r.(int)
 }
 
 // FindIndex ...
