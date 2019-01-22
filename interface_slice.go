@@ -10,6 +10,12 @@ func (s Slice) Every(fn func(element interface{}, index int) bool) bool {
 	})
 }
 
+// Fill fills elements from a start index to an end index (not included) with a
+// static value.
+func (s Slice) Fill(value interface{}, start int, end int) Slice {
+	return fill(s, value, start, end).(Slice)
+}
+
 // Filter ...
 func (s Slice) Filter(fn func(element interface{}, index int) bool) Slice {
 	return filter(s, func(element interface{}, index int) bool {

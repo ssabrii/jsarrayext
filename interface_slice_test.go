@@ -89,6 +89,43 @@ func TestSliceEvery(t *testing.T) {
 	})
 }
 
+func TestSliceFill(t *testing.T) {
+	// It should return the same slice.
+	t.Run("", func(t *testing.T) {
+		s := Slice(make([]interface{}, 1))
+		r := s.Fill(0, 0, 0)
+
+		if &s[0] != &r[0] {
+			t.Error()
+		}
+	})
+
+	// It should fill with value.
+	t.Run("", func(t *testing.T) {
+		start, end := 1, 4
+		s := Slice(make([]interface{}, 5))
+		r := s.Fill(0, start, end)
+
+		r.ForEach(func(element interface{}, index int) {
+			if index >= start && index < end {
+				if element != 0 {
+					t.Error()
+				}
+			} else {
+				if element != nil {
+					t.Error()
+				}
+			}
+		})
+	})
+
+	// It should be able to fill with nil.
+	t.Run("", func(t *testing.T) {
+		s := Slice(make([]interface{}, 1))
+		s.Fill(nil, 0, 1)
+	})
+}
+
 func TestSliceFilter(t *testing.T) {
 	// It should return a slice with the right capacity.
 	t.Run("", func(t *testing.T) {

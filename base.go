@@ -16,6 +16,26 @@ func every(
 	return true
 }
 
+func fill(
+	slice interface{},
+	value interface{},
+	start int,
+	end int,
+) interface{} {
+	val := func() reflect.Value {
+		if value == nil {
+			return reflect.Zero(reflect.TypeOf((*interface{})(nil)).Elem())
+		}
+		return reflect.ValueOf(value)
+	}()
+
+	for index := start; index < end; index++ {
+		reflect.ValueOf(slice).Index(index).Set(val)
+	}
+
+	return slice
+}
+
 func filter(
 	slice interface{},
 	fn func(element interface{}, index int) bool,

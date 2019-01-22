@@ -89,6 +89,37 @@ func TestIntSliceEvery(t *testing.T) {
 	})
 }
 
+func TestIntSliceFill(t *testing.T) {
+	// It should return the same slice.
+	t.Run("", func(t *testing.T) {
+		s := IntSlice(make([]int, 1))
+		r := s.Fill(0, 0, 0)
+
+		if &s[0] != &r[0] {
+			t.Error()
+		}
+	})
+
+	// It should fill with value.
+	t.Run("", func(t *testing.T) {
+		start, end := 1, 4
+		s := IntSlice(make([]int, 5))
+		r := s.Fill(1, start, end)
+
+		r.ForEach(func(element int, index int) {
+			if index >= start && index < end {
+				if element != 1 {
+					t.Error()
+				}
+			} else {
+				if element != 0 {
+					t.Error()
+				}
+			}
+		})
+	})
+}
+
 func TestIntSliceFilter(t *testing.T) {
 	// It should return a slice with the right capacity.
 	t.Run("", func(t *testing.T) {
