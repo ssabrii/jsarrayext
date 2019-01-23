@@ -94,6 +94,15 @@ func forEach(
 	}
 }
 
+func includes(
+	slice interface{},
+	value interface{},
+) bool {
+	return some(slice, func(element interface{}, index int) bool {
+		return reflect.DeepEqual(element, value)
+	})
+}
+
 func mapToInterfaceSlice(
 	slice interface{},
 	fn func(element interface{}, index int) interface{},

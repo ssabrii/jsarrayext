@@ -49,6 +49,11 @@ func (s IntSlice) ForEach(fn func(element int, index int)) {
 	})
 }
 
+// Includes determines whether a slice includes a certain value.
+func (s IntSlice) Includes(value int) bool {
+	return includes(s, value)
+}
+
 // Map ...
 func (s IntSlice) Map(fn func(element int, index int) interface{}) Slice {
 	return mapToInterfaceSlice(s, func(element interface{}, index int) interface{} {

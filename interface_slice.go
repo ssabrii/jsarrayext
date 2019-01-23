@@ -44,6 +44,12 @@ func (s Slice) ForEach(fn func(element interface{}, index int)) {
 	})
 }
 
+// Includes determines whether a slice includes a certain value. Equality is
+// determined by reflect.DeepEqual().
+func (s Slice) Includes(value interface{}) bool {
+	return includes(s, value)
+}
+
 // Map ...
 func (s Slice) Map(fn func(element interface{}, index int) interface{}) Slice {
 	return mapToInterfaceSlice(s, func(element interface{}, index int) interface{} {

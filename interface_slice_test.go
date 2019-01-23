@@ -379,6 +379,43 @@ func TestSliceForEach(t *testing.T) {
 	})
 }
 
+func TestSliceIncludes(t *testing.T) {
+	// It should return true if the slice includes the value and return false on
+	// the contrary.
+	t.Run("", func(t *testing.T) {
+		s := Slice([]interface{}{1, 2, 3, 4, 5})
+		rt := s.Includes(3)
+		rf := s.Includes(6)
+
+		if rt != true {
+			t.Error()
+		}
+
+		if rf != false {
+			t.Error()
+		}
+	})
+
+	// It should be able to compare slices.
+	t.Run("", func(t *testing.T) {
+		s := Slice(make([]interface{}, 1)).
+			Map(func(element interface{}, index int) interface{} {
+				return []int{1, 2}
+			})
+
+		rt := s.Includes([]int{1, 2})
+		rf := s.Includes([]int{1, 0})
+
+		if rt != true {
+			t.Error()
+		}
+
+		if rf != false {
+			t.Error()
+		}
+	})
+}
+
 func TestSliceMap(t *testing.T) {
 	// It should return a slice with mapped values.
 	t.Run("", func(t *testing.T) {

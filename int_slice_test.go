@@ -355,6 +355,24 @@ func TestIntSliceForEach(t *testing.T) {
 	})
 }
 
+func TestIntSliceIncludes(t *testing.T) {
+	// It should return true if the slice includes the value and return false on
+	// the contrary.
+	t.Run("", func(t *testing.T) {
+		s := IntSlice([]int{1, 2, 3, 4, 5})
+		rt := s.Includes(3)
+		rf := s.Includes(6)
+
+		if rt != true {
+			t.Error()
+		}
+
+		if rf != false {
+			t.Error()
+		}
+	})
+}
+
 func TestIntSliceMap(t *testing.T) {
 	// It should return a slice with mapped values.
 	t.Run("", func(t *testing.T) {
