@@ -50,6 +50,13 @@ func (s Slice) Includes(value interface{}) bool {
 	return includes(s, value)
 }
 
+// IndexOf returns the first index at which a given value can be found in the
+// slice, or -1 if it is not present. Equality is determined by
+// reflect.DeepEqual().
+func (s Slice) IndexOf(value interface{}) int {
+	return indexOf(s, value)
+}
+
 // Map ...
 func (s Slice) Map(fn func(element interface{}, index int) interface{}) Slice {
 	return mapToInterfaceSlice(s, func(element interface{}, index int) interface{} {

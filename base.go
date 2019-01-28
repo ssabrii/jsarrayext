@@ -103,6 +103,15 @@ func includes(
 	})
 }
 
+func indexOf(
+	slice interface{},
+	value interface{},
+) int {
+	return findIndex(slice, func(element interface{}, index int) bool {
+		return reflect.DeepEqual(element, value)
+	})
+}
+
 func mapToInterfaceSlice(
 	slice interface{},
 	fn func(element interface{}, index int) interface{},

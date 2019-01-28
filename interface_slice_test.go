@@ -416,6 +416,23 @@ func TestSliceIncludes(t *testing.T) {
 	})
 }
 
+func TestSliceIndexOf(t *testing.T) {
+	// It should return the index if the value is found and return -1 if not.
+	t.Run("", func(t *testing.T) {
+		s := Slice([]interface{}{1, 2, 3, 4, 5})
+		r1 := s.IndexOf(3)
+		r2 := s.IndexOf(6)
+
+		if r1 != 2 {
+			t.Error()
+		}
+
+		if r2 != -1 {
+			t.Error()
+		}
+	})
+}
+
 func TestSliceMap(t *testing.T) {
 	// It should return a slice with mapped values.
 	t.Run("", func(t *testing.T) {
