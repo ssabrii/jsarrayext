@@ -60,6 +60,12 @@ func (s IntSlice) IndexOf(value int) int {
 	return indexOf(s, value)
 }
 
+// LastIndexOf returns the last index at which a given value can be found in the
+// slice, or -1 if it is not present.
+func (s IntSlice) LastIndexOf(value int) int {
+	return lastIndexOf(s, value)
+}
+
 // Map ...
 func (s IntSlice) Map(fn func(element int, index int) interface{}) Slice {
 	return mapToInterfaceSlice(s, func(element interface{}, index int) interface{} {

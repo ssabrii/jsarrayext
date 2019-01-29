@@ -433,6 +433,23 @@ func TestSliceIndexOf(t *testing.T) {
 	})
 }
 
+func TestSliceLastIndexOf(t *testing.T) {
+	// It should return the index if the value is found and return -1 if not.
+	t.Run("", func(t *testing.T) {
+		s := Slice([]interface{}{1, 2, 3, 2, 1})
+		r1 := s.LastIndexOf(2)
+		r2 := s.LastIndexOf(4)
+
+		if r1 != 3 {
+			t.Error()
+		}
+
+		if r2 != -1 {
+			t.Error()
+		}
+	})
+}
+
 func TestSliceMap(t *testing.T) {
 	// It should return a slice with mapped values.
 	t.Run("", func(t *testing.T) {

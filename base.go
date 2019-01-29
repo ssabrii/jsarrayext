@@ -112,6 +112,23 @@ func indexOf(
 	})
 }
 
+func lastIndexOf(
+	slice interface{},
+	value interface{},
+) int {
+	sliceValue := reflect.ValueOf(slice)
+	len := sliceValue.Len()
+
+	for index := len - 1; index >= 0; index-- {
+		element := sliceValue.Index(index).Interface()
+		if reflect.DeepEqual(element, value) {
+			return index
+		}
+	}
+
+	return -1
+}
+
 func mapToInterfaceSlice(
 	slice interface{},
 	fn func(element interface{}, index int) interface{},
